@@ -1,0 +1,1785 @@
+{
+	"info": {
+		"_postman_id": "15ec67e1-adfd-4dea-9b01-8a8c14b63293",
+		"name": "Trello API",
+		"description": "### Trello API collection\n\nThe API of my choice is Trello. Having used Jira API previously I thought it would be interesting to have a look at another Atlassian product. \n <https://developer.atlassian.com/cloud/trello/rest/api-group-actions/>\n\nFor this collection I started by creating an environment which I named: TrelloEnvironment.\nThen I created global variables that include: The API key, token, secret and endpoint. \nThe collection includes four separate files that contain the requests related to: \n* Logging \n* Fetching protected data \n* Creating protected data \n*  Updating protected data.\n\nI have run an API collection test which show a positive outcome.\n\nIn each file you will find a documented process including examples of the results.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Logging",
+			"item": [
+				{
+					"name": "Logging to Trello",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "oauth1",
+							"oauth1": [
+								{
+									"key": "consumerKey",
+									"value": "{{Trello Key}}",
+									"type": "string"
+								},
+								{
+									"key": "tokenSecret",
+									"value": "{{Secret}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}",
+									"type": "string"
+								},
+								{
+									"key": "signatureMethod",
+									"value": "HMAC-SHA1",
+									"type": "string"
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"type": "string"
+								},
+								{
+									"key": "addParamsToHeader",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "addEmptyParamsToSign",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/authorize?expiration=never&name=MyPersonalToken&scope=read&response_type=token&key={{Trello Key}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "expiration",
+									"value": "never"
+								},
+								{
+									"key": "name",
+									"value": "MyPersonalToken"
+								},
+								{
+									"key": "scope",
+									"value": "read"
+								},
+								{
+									"key": "response_type",
+									"value": "token"
+								},
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								}
+							]
+						},
+						"description": "#### Authetification\nI have been researching a way to access to the app with the credentials but I wasn't successful doing it. This is an example that would be used to allow a third party app to get access to the users account. I followed the documentation available here: <https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/>"
+					},
+					"response": [
+						{
+							"name": "Logging to Trello",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/1/authorize?expiration=never&name=MyPersonalToken&scope=read&response_type=token&key={{Trello Key}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"1",
+										"authorize"
+									],
+									"query": [
+										{
+											"key": "expiration",
+											"value": "never"
+										},
+										{
+											"key": "name",
+											"value": "MyPersonalToken"
+										},
+										{
+											"key": "scope",
+											"value": "read"
+										},
+										{
+											"key": "response_type",
+											"value": "token"
+										},
+										{
+											"key": "key",
+											"value": "{{Trello Key}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "X-Dns-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "Deny"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "strict-origin-when-cross-origin"
+								},
+								{
+									"key": "Surrogate-Control",
+									"value": "no-store"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-store, no-cache, must-revalidate, proxy-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Trello-Version",
+									"value": "1.2412.0"
+								},
+								{
+									"key": "X-Trello-Environment",
+									"value": "Production"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, PUT, POST, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Authorization, Accept, Content-Type"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "x-rate-limit-api-key-interval-ms, x-rate-limit-api-key-max, x-rate-limit-api-key-remaining, x-rate-limit-api-token-interval-ms, x-rate-limit-api-token-max, x-rate-limit-api-token-remaining"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 Apr 2021 14:26:45 GMT"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "X-Envoy-Upstream-Service-Time",
+									"value": "115"
+								},
+								{
+									"key": "Expect-Ct",
+									"value": "report-uri=\"https://web-security-reports.services.atlassian.com/expect-ct-report/trello-edge\", max-age=86400"
+								},
+								{
+									"key": "X-Logging-Id",
+									"value": "7a01fdce-4547-49f0-9059-3b05dad7c9ba"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=63072000; preload"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Xss-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Atl-Traceid",
+									"value": "397d4c8165ce5504"
+								},
+								{
+									"key": "Server",
+									"value": "globaledge-envoy"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge,chrome=1\">\n        <meta name=\"viewport\" content=\"maximum-scale=1.0,width=device-width,initial-scale=1.0\">\n        <title>Authorize | Trello</title>\n        <link rel=\"stylesheet\" href=\"/css/account.css\">\n        <!-- Google Analytics -->\n        <script>\n    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');\n\n    var page = location.pathname;\n    if(page === \"/\") page = \"/boards\";\n    ga('create', '', 'trello.com');\n    ga('send', 'pageview', page);\n\n    (function(p,l,o,w,i,n,g){if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];\n    p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)\n    };p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;\n    n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,\"script\",\"//a.trellocdn.com/lib/snowplow/2.0.2.js\",\"sp\"));\n  </script>\n    </head>\n    <script>\n\n  var submitted = false;\n\n  function onSubmit() {\n    if (submitted) {\n      return false;\n    }\n    submitted = true;\n    return true;\n  }\n\n  function setup() {\n    // don't allow authentication until 3 seconds have passed\n    setTimeout(function() {\n      document.getElementById('approveButton').disabled = false;\n    }, 3000);\n  }\n\n  function unhideAllTeams() {\n    document.getElementById('hidden-teams').classList.remove('hidden');\n    document.getElementById('unhide-teams-prompt').classList.add('hidden');\n  }\n</script>\n    <body class=\"account-page request-token\" onload=\"setup();\">\n        <div class=\"account-header compact\">\n            <img alt=\"Trello logo\" src=\"/images/trello-logo-blue.svg\">\n        </div>\n        <div id=\"surface\">\n            <div class=\"account-content clearfix\">\n                <div class=\"authorization-question\">\n                    <h1>\n        Would you like to give the following application access to your account?\n      </h1>\n                </div>\n                <hr>\n                <div class=\"application-info\">\n                    <h1 class=\"application-name\">MyPersonalToken</h1>\n                    <br>\n    \n                </div>\n                <div class=\"disclaimer\">\n                    <div class=\"disclaimer-image\">\n                        <img class=\"visibility-image\" src=\"/images/privacy.svg\" height=\"25px\" width=\"25px\"/>\n                    </div>\n                    <div class=\"disclaimer-text\">\n                        <b>MyPersonalToken</b> will be able to use your account\n                        <b>until you disable it.</b>\n                    </div>\n                </div>\n                <hr>\n                <div class=\"disclaimer\">\n                    <div class=\"disclaimer-image\">\n                        <img src=\"/images/warning.svg\" height=\"24\" width=\"24\">\n        \n                    </div>\n                    <div class=\"disclaimer-text\">\n                        <p>\n                            <b>MyPersonalToken</b> is not affiliated with Trello, and by permitting access to your content you assume all related risks and liabilities.\n                        </p>\n                    </div>\n                </div>\n                <hr>\n                <div class=\"allowed-permissions\">\n                    <b>MyPersonalToken</b> will be able to:\n                    <ul>\n                        <li>Read your name and username</li>\n                        <li>Read your Enterprises</li>\n                        <li>Read all of your boards and Workspaces</li>\n                        <li>Read your Workspace&#39;s Power-Ups</li>\n                    </ul>\n                </div>\n                <br>\n                <div class=\"disallowed-permissions\">\n                    <b>MyPersonalToken</b> will\n                    <b>not</b> be able to:\n                    <ul>\n                        <li>Make comments as you</li>\n                        <li>Read your email address</li>\n                        <li>See your Trello password</li>\n                        <li>Update and manage your Enterprises</li>\n                        <li>Create and update cards, lists, boards and Workspaces</li>\n                        <li>Update your Workspace&#39;s Power-Ups</li>\n                    </ul>\n                </div>\n                <hr>\n                <div class=\"consent-confirmation\">\n                    <div class=\"privacy\">\n                        <p>\n                            <a href=\"https://trello.com/privacy\" rel=\"noopener noreferrer\" target=\"_blank\">\n            Trello's Privacy Policy\n          </a>\n                        </p>\n                    </div>\n                    <form method=\"POST\" action=\"/1/token/approve\" onsubmit=\"return onSubmit()\">\n                        <div class=\"buttons\">\n                            <input type=\"submit\" class=\"deny\" value=\"Deny\">\n                            <a class=\"button primary\" href=\"/login?returnUrl=%2F1%2Fauthorize%3FrequestKey%3Daf7f2ce8bddbd86132a8a8385e0c4a84\">Log in</a>\n                            <input type=\"hidden\" name=\"requestKey\" value=\"af7f2ce8bddbd86132a8a8385e0c4a84\">\n                            <input type=\"hidden\" name=\"signature\" value=\"1618670805662/739bd27354871b63fe3c4d06ccca807b21da5c8761b60aad785eeb8e09eef566\">\n        \n                        </div>\n                    </form>\n                </div>\n            </div>\n            <div class=\"app-info-footer\">\n                <div class=\"app-info\">\n                    <img src=\"/images/clock.svg\" height=\"24\" width=\"24\">\n    \n                </div>\n                <div class=\"app-info\">\n      Created a day ago\n    </div>\n                <div class=\"app-info\">\n                    <img src=\"/images/organization.svg\" height=\"24\" width=\"24\">\n    \n                </div>\n                <div class=\"app-info\">\n      Used by 0 members \n    </div>\n            </div>\n        </div>\n    </body>\n</html>"
+						}
+					]
+				}
+			],
+			"description": "#### Logging"
+		},
+		{
+			"name": "Fetching protected data (GET)",
+			"item": [
+				{
+					"name": "First API Call",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/members/me/boards?key={{Trello Key}}&token={{Trello Token}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"members",
+								"me",
+								"boards"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								}
+							]
+						},
+						"description": "This request allows you to list your boards."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Board",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"pboard_id\", jsonData.id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/boards/{{pboard_id}}?key={{Trello Key}}&token={{Trello Token}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"boards",
+								"{{pboard_id}}"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								}
+							]
+						},
+						"description": "#### Get Board\n\nThe GET board request, retrieves data from a specific board. In this case I choose to work on a board Template.\n\nThe code bellow is the test that retrieves the board id that will be stored in the environment variables.\n```\nvar jsonData = JSON.parse(responseBody);\npostman.setEnvironmentVariable(\"pboard_id\", jsonData.id);\n```"
+					},
+					"response": [
+						{
+							"name": "Get Board",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/1/boards/{{pboard_id}}?key={{Trello Key}}&token={{Trello Token}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"1",
+										"boards",
+										"{{pboard_id}}"
+									],
+									"query": [
+										{
+											"key": "key",
+											"value": "{{Trello Key}}"
+										},
+										{
+											"key": "token",
+											"value": "{{Trello Token}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Dns-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "strict-origin-when-cross-origin"
+								},
+								{
+									"key": "Surrogate-Control",
+									"value": "no-store"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=0, must-revalidate, no-cache, no-store"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "Thu, 01 Jan 1970 00:00:00"
+								},
+								{
+									"key": "X-Trello-Version",
+									"value": "1.2412.0"
+								},
+								{
+									"key": "X-Trello-Environment",
+									"value": "Production"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, PUT, POST, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Authorization, Accept, Content-Type"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "x-rate-limit-api-key-interval-ms, x-rate-limit-api-key-max, x-rate-limit-api-key-remaining, x-rate-limit-api-token-interval-ms, x-rate-limit-api-token-max, x-rate-limit-api-token-remaining"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Key-Interval-Ms",
+									"value": "10000"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Key-Max",
+									"value": "300"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Key-Remaining",
+									"value": "299"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Token-Interval-Ms",
+									"value": "10000"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Token-Max",
+									"value": "100"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Token-Remaining",
+									"value": "99"
+								},
+								{
+									"key": "X-Rate-Limit-Member-Interval-Ms",
+									"value": "10000"
+								},
+								{
+									"key": "X-Rate-Limit-Member-Max",
+									"value": "200"
+								},
+								{
+									"key": "X-Rate-Limit-Member-Remaining",
+									"value": "199"
+								},
+								{
+									"key": "X-Server-Time",
+									"value": "1618670299673"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 Apr 2021 14:38:19 GMT"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "X-Envoy-Upstream-Service-Time",
+									"value": "120"
+								},
+								{
+									"key": "Expect-Ct",
+									"value": "report-uri=\"https://web-security-reports.services.atlassian.com/expect-ct-report/trello-edge\", max-age=86400"
+								},
+								{
+									"key": "X-Logging-Id",
+									"value": "7a01fdce-4547-49f0-9059-3b05dad7c9ba"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=63072000; preload"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Xss-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Atl-Traceid",
+									"value": "23ba4e327eb2ef05"
+								},
+								{
+									"key": "Server",
+									"value": "globaledge-envoy"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"57a8923bea585928f4caf750\",\n    \"name\": \"Sprint Retrospectives\",\n    \"desc\": \"Sprint retrospectives are a necessary part of keeping a team healthy. Replace whiteboards with Trello boards for more informative and accessible team retrospectives.\\n\\nPerforming regular retros will help your team...\\n\\n- Stay effective and remove roadblocks for success with regularly held retrospectives after every sprint.\\n- Create an open and encouraging environment that puts people (introverts and extroverts) on the same level.\\n- Celebrate what went well, what needs improvement, and any action items required to improve communication and collaboration.\\n- Empower team members to vote and openly discuss the issues that matter most to the team and users.\\n- Keep distributed teams in sync by removing geographic barriers with this accessible from anywhere Trello board.\\n\\n----------\\n\\nJust getting started? Check out these popular blog posts on the Trello blog:\\n\\n- https://blog.trello.com/sprint-retrospective-meeting\\n- https://blog.trello.com/the-5-steps-to-better-team-retrospectives\",\n    \"descData\": {\n        \"emoji\": {}\n    },\n    \"closed\": false,\n    \"idOrganization\": \"54b58957112602c9a0be7aa3\",\n    \"idEnterprise\": null,\n    \"pinned\": false,\n    \"url\": \"https://trello.com/b/hkaQsLWx/sprint-retrospectives\",\n    \"shortUrl\": \"https://trello.com/b/hkaQsLWx\",\n    \"labelNames\": {\n        \"green\": \"\",\n        \"yellow\": \"\",\n        \"orange\": \"\",\n        \"red\": \"\",\n        \"purple\": \"\",\n        \"blue\": \"\",\n        \"sky\": \"\",\n        \"lime\": \"\",\n        \"pink\": \"\",\n        \"black\": \"\"\n    },\n    \"prefs\": {\n        \"permissionLevel\": \"public\",\n        \"hideVotes\": false,\n        \"voting\": \"members\",\n        \"comments\": \"members\",\n        \"invitations\": \"members\",\n        \"selfJoin\": true,\n        \"cardCovers\": true,\n        \"isTemplate\": true,\n        \"cardAging\": \"regular\",\n        \"calendarFeedEnabled\": false,\n        \"background\": \"5997b960583fdb8211eed0ab\",\n        \"backgroundImage\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2560x1350/86136e48b920dbd41f570b07619003fd/photo-1502904550040-7534597429ae\",\n        \"backgroundImageScaled\": [\n            {\n                \"width\": 140,\n                \"height\": 100,\n                \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/140x100/72a27fdb38c8f27804d8cef7723d5836/photo-1502904550040-7534597429ae.jpg\"\n            },\n            {\n                \"width\": 256,\n                \"height\": 192,\n                \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x192/73d38d9d73814781760f9a9652079ca4/photo-1502904550040-7534597429ae.jpg\"\n            },\n            {\n                \"width\": 480,\n                \"height\": 480,\n                \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/480x480/a14bfd17c3e498b5793fcd6e6de5b7a6/photo-1502904550040-7534597429ae.jpg\"\n            },\n            {\n                \"width\": 960,\n                \"height\": 960,\n                \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/960x960/bb8f2798e09007d3d6bfd231e27f0f05/photo-1502904550040-7534597429ae.jpg\"\n            },\n            {\n                \"width\": 1024,\n                \"height\": 1024,\n                \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1024x1024/c2443ee62c65acf1da246ce40639573c/photo-1502904550040-7534597429ae.jpg\"\n            },\n            {\n                \"width\": 2048,\n                \"height\": 2048,\n                \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2048x2048/9222aff220ef8bd64ef8168c45b86d69/photo-1502904550040-7534597429ae.jpg\"\n            },\n            {\n                \"width\": 1280,\n                \"height\": 1280,\n                \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1280x1280/3b80a09a2925e4cec02a6aa7009aa0e3/photo-1502904550040-7534597429ae.jpg\"\n            },\n            {\n                \"width\": 1920,\n                \"height\": 1920,\n                \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1920x1920/6dbd384838e94ae450ab006b409d9c55/photo-1502904550040-7534597429ae.jpg\"\n            },\n            {\n                \"width\": 2560,\n                \"height\": 1350,\n                \"url\": \"https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2560x1350/86136e48b920dbd41f570b07619003fd/photo-1502904550040-7534597429ae\"\n            }\n        ],\n        \"backgroundTile\": false,\n        \"backgroundBrightness\": \"light\",\n        \"backgroundBottomColor\": \"#ca736a\",\n        \"backgroundTopColor\": \"#d37c73\",\n        \"canBePublic\": false,\n        \"canBeEnterprise\": false,\n        \"canBeOrg\": false,\n        \"canBePrivate\": false,\n        \"canInvite\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get lists on a board",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"plist_id\", jsonData.id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/boards/{{pboard_id}}/lists?key={{Trello Key}}&token={{Trello Token}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"boards",
+								"{{pboard_id}}",
+								"lists"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								}
+							]
+						},
+						"description": "#### Get Lists\nThe GET lists request, retrieves data from the lists available in the \"Sprint Retrospectives\" board.\n\nThe code bellow is the test that retrieves a list id that will be stored in the environment variables.\n\n```\nvar jsonData = JSON.parse(responseBody);\npostman.setEnvironmentVariable(\"plist_id\", jsonData.id);\n```"
+					},
+					"response": [
+						{
+							"name": "Get lists on a board",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/1/boards/{{pboard_id}}/lists?key={{Trello Key}}&token={{Trello Token}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"1",
+										"boards",
+										"{{pboard_id}}",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "key",
+											"value": "{{Trello Key}}"
+										},
+										{
+											"key": "token",
+											"value": "{{Trello Token}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Dns-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "strict-origin-when-cross-origin"
+								},
+								{
+									"key": "Surrogate-Control",
+									"value": "no-store"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=0, must-revalidate, no-cache, no-store"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "Thu, 01 Jan 1970 00:00:00"
+								},
+								{
+									"key": "X-Trello-Version",
+									"value": "1.2412.0"
+								},
+								{
+									"key": "X-Trello-Environment",
+									"value": "Production"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, PUT, POST, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Authorization, Accept, Content-Type"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "x-rate-limit-api-key-interval-ms, x-rate-limit-api-key-max, x-rate-limit-api-key-remaining, x-rate-limit-api-token-interval-ms, x-rate-limit-api-token-max, x-rate-limit-api-token-remaining"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Key-Interval-Ms",
+									"value": "10000"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Key-Max",
+									"value": "300"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Key-Remaining",
+									"value": "299"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Token-Interval-Ms",
+									"value": "10000"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Token-Max",
+									"value": "100"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Token-Remaining",
+									"value": "99"
+								},
+								{
+									"key": "X-Rate-Limit-Member-Interval-Ms",
+									"value": "10000"
+								},
+								{
+									"key": "X-Rate-Limit-Member-Max",
+									"value": "200"
+								},
+								{
+									"key": "X-Rate-Limit-Member-Remaining",
+									"value": "199"
+								},
+								{
+									"key": "X-Server-Time",
+									"value": "1618670316106"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 Apr 2021 14:38:35 GMT"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "X-Envoy-Upstream-Service-Time",
+									"value": "113"
+								},
+								{
+									"key": "Expect-Ct",
+									"value": "report-uri=\"https://web-security-reports.services.atlassian.com/expect-ct-report/trello-edge\", max-age=86400"
+								},
+								{
+									"key": "X-Logging-Id",
+									"value": "7a01fdce-4547-49f0-9059-3b05dad7c9ba"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=63072000; preload"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Xss-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Atl-Traceid",
+									"value": "0c33fadd8ce09d5b"
+								},
+								{
+									"key": "Server",
+									"value": "globaledge-envoy"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"57a8923bea585928f4caf751\",\n        \"name\": \"🏆 Went Well\",\n        \"closed\": false,\n        \"pos\": 131071,\n        \"softLimit\": null,\n        \"idBoard\": \"57a8923bea585928f4caf750\",\n        \"subscribed\": false\n    },\n    {\n        \"id\": \"57a8923bea585928f4caf752\",\n        \"name\": \"🚫 Needs To Change\",\n        \"closed\": false,\n        \"pos\": 196607,\n        \"softLimit\": null,\n        \"idBoard\": \"57a8923bea585928f4caf750\",\n        \"subscribed\": false\n    },\n    {\n        \"id\": \"57a8923bea585928f4caf753\",\n        \"name\": \"❓Questions & Discussion\",\n        \"closed\": false,\n        \"pos\": 262143,\n        \"softLimit\": null,\n        \"idBoard\": \"57a8923bea585928f4caf750\",\n        \"subscribed\": false\n    },\n    {\n        \"id\": \"57a8923bea585928f4caf754\",\n        \"name\": \"✅ Action Items\",\n        \"closed\": false,\n        \"pos\": 327679,\n        \"softLimit\": null,\n        \"idBoard\": \"57a8923bea585928f4caf750\",\n        \"subscribed\": false\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get a card in a list",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/cards/7pRzEFXn/?key={{Trello Key}}&token={{Trello Token}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"cards",
+								"7pRzEFXn",
+								""
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								}
+							]
+						},
+						"description": "#### Get card\nThe GET card request, retrieves data from a card available in the \"Sprint Retrospectives\" board."
+					},
+					"response": [
+						{
+							"name": "Get a card in a list",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/1/cards/7pRzEFXn/?key={{Trello Key}}&token={{Trello Token}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"1",
+										"cards",
+										"7pRzEFXn",
+										""
+									],
+									"query": [
+										{
+											"key": "key",
+											"value": "{{Trello Key}}"
+										},
+										{
+											"key": "token",
+											"value": "{{Trello Token}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Dns-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "strict-origin-when-cross-origin"
+								},
+								{
+									"key": "Surrogate-Control",
+									"value": "no-store"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=0, must-revalidate, no-cache, no-store"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "Thu, 01 Jan 1970 00:00:00"
+								},
+								{
+									"key": "X-Trello-Version",
+									"value": "1.2412.0"
+								},
+								{
+									"key": "X-Trello-Environment",
+									"value": "Production"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, PUT, POST, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Authorization, Accept, Content-Type"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "x-rate-limit-api-key-interval-ms, x-rate-limit-api-key-max, x-rate-limit-api-key-remaining, x-rate-limit-api-token-interval-ms, x-rate-limit-api-token-max, x-rate-limit-api-token-remaining"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Key-Interval-Ms",
+									"value": "10000"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Key-Max",
+									"value": "300"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Key-Remaining",
+									"value": "299"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Token-Interval-Ms",
+									"value": "10000"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Token-Max",
+									"value": "100"
+								},
+								{
+									"key": "X-Rate-Limit-Api-Token-Remaining",
+									"value": "99"
+								},
+								{
+									"key": "X-Rate-Limit-Member-Interval-Ms",
+									"value": "10000"
+								},
+								{
+									"key": "X-Rate-Limit-Member-Max",
+									"value": "200"
+								},
+								{
+									"key": "X-Rate-Limit-Member-Remaining",
+									"value": "199"
+								},
+								{
+									"key": "X-Server-Time",
+									"value": "1618670365421"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 Apr 2021 14:39:25 GMT"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "X-Envoy-Upstream-Service-Time",
+									"value": "122"
+								},
+								{
+									"key": "Expect-Ct",
+									"value": "report-uri=\"https://web-security-reports.services.atlassian.com/expect-ct-report/trello-edge\", max-age=86400"
+								},
+								{
+									"key": "X-Logging-Id",
+									"value": "7a01fdce-4547-49f0-9059-3b05dad7c9ba"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=63072000; preload"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Xss-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Atl-Traceid",
+									"value": "1a6c0def7f0df87d"
+								},
+								{
+									"key": "Server",
+									"value": "globaledge-envoy"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"57a8923bea585928f4caf75b\",\n    \"checkItemStates\": [],\n    \"closed\": false,\n    \"dateLastActivity\": \"2016-08-08T14:08:38.247Z\",\n    \"desc\": \"\",\n    \"descData\": null,\n    \"dueReminder\": null,\n    \"idBoard\": \"57a8923bea585928f4caf750\",\n    \"idList\": \"57a8923bea585928f4caf751\",\n    \"idMembersVoted\": [],\n    \"idShort\": 1,\n    \"idAttachmentCover\": null,\n    \"idLabels\": [],\n    \"manualCoverAttachment\": false,\n    \"name\": \"People love it!\",\n    \"pos\": 131071,\n    \"shortLink\": \"7pRzEFXn\",\n    \"isTemplate\": false,\n    \"cardRole\": null,\n    \"dueComplete\": false,\n    \"due\": null,\n    \"email\": null,\n    \"labels\": [],\n    \"shortUrl\": \"https://trello.com/c/7pRzEFXn\",\n    \"start\": null,\n    \"url\": \"https://trello.com/c/7pRzEFXn/1-people-love-it\",\n    \"badges\": {\n        \"attachmentsByType\": {\n            \"trello\": {\n                \"board\": 0,\n                \"card\": 0\n            }\n        },\n        \"location\": false,\n        \"votes\": 0,\n        \"viewingMemberVoted\": false,\n        \"subscribed\": false,\n        \"fogbugz\": \"\",\n        \"checkItems\": 0,\n        \"checkItemsChecked\": 0,\n        \"checkItemsEarliestDue\": null,\n        \"comments\": 0,\n        \"attachments\": 0,\n        \"description\": false,\n        \"due\": null,\n        \"dueComplete\": false,\n        \"start\": null\n    },\n    \"subscribed\": false,\n    \"idChecklists\": [],\n    \"idMembers\": [\n        \"54aecb1587f427075b81a0b1\"\n    ],\n    \"cover\": {\n        \"idAttachment\": null,\n        \"color\": null,\n        \"idUploadedBackground\": null,\n        \"size\": \"normal\",\n        \"brightness\": \"dark\",\n        \"idPlugin\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get members from a card",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/cards/7pRzEFXn/members",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"cards",
+								"7pRzEFXn",
+								"members"
+							]
+						},
+						"description": "#### GET Members from cards\n\nThis request retrieves the members that created and worked on a specific card."
+					},
+					"response": [
+						{
+							"name": "Get members from a card",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/1/cards/7pRzEFXn/members",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"1",
+										"cards",
+										"7pRzEFXn",
+										"members"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Dns-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "strict-origin-when-cross-origin"
+								},
+								{
+									"key": "Surrogate-Control",
+									"value": "no-store"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "max-age=0, must-revalidate, no-cache, no-store"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "Thu, 01 Jan 1970 00:00:00"
+								},
+								{
+									"key": "X-Trello-Version",
+									"value": "1.2412.0"
+								},
+								{
+									"key": "X-Trello-Environment",
+									"value": "Production"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "GET, PUT, POST, DELETE"
+								},
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "Authorization, Accept, Content-Type"
+								},
+								{
+									"key": "Access-Control-Expose-Headers",
+									"value": "x-rate-limit-api-key-interval-ms, x-rate-limit-api-key-max, x-rate-limit-api-key-remaining, x-rate-limit-api-token-interval-ms, x-rate-limit-api-token-max, x-rate-limit-api-token-remaining"
+								},
+								{
+									"key": "X-Server-Time",
+									"value": "1618673524294"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 Apr 2021 15:32:04 GMT"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								},
+								{
+									"key": "X-Envoy-Upstream-Service-Time",
+									"value": "115"
+								},
+								{
+									"key": "Expect-Ct",
+									"value": "report-uri=\"https://web-security-reports.services.atlassian.com/expect-ct-report/trello-edge\", max-age=86400"
+								},
+								{
+									"key": "X-Logging-Id",
+									"value": "7a01fdce-4547-49f0-9059-3b05dad7c9ba"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=63072000; preload"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-Xss-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Atl-Traceid",
+									"value": "45c02193c3715489"
+								},
+								{
+									"key": "Server",
+									"value": "globaledge-envoy"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"54aecb1587f427075b81a0b1\",\n        \"username\": \"amyfreiderson\",\n        \"activityBlocked\": false,\n        \"avatarHash\": \"cf1d8834636ca4f1c960a300c52e9a6c\",\n        \"avatarUrl\": \"https://trello-members.s3.amazonaws.com/54aecb1587f427075b81a0b1/cf1d8834636ca4f1c960a300c52e9a6c\",\n        \"fullName\": \"Amy Freiderson\",\n        \"idMemberReferrer\": null,\n        \"initials\": \"AF\",\n        \"nonPublic\": {},\n        \"nonPublicAvailable\": false\n    }\n]"
+						}
+					]
+				}
+			],
+			"description": "### Fetching Data\n\nThis file is dedicated to retieve informations from a public board in Trello: \" Sprint Retrospectives\". \n\nTo access different elements, I stored the board Id in a variable. The other variables are stored by running the collection test."
+		},
+		{
+			"name": "Creating protected data (POST)",
+			"item": [
+				{
+					"name": "Create a new board",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonBoard = pm.response.json();",
+									"",
+									"pm.collectionVariables.set(\"board_id\",jsonBoard.id);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/boards/?key={{Trello Key}}&token={{Trello Token}}&name=Test Daon Kanban Board",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"boards",
+								""
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}",
+									"description": "Required"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}",
+									"description": "Required"
+								},
+								{
+									"key": "name",
+									"value": "Test Daon Kanban Board",
+									"description": "Board Name"
+								}
+							]
+						},
+						"description": "#### POST Board\n\nThis POST request will create a new \"Daon Kanban Board\" in Trello."
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonList = pm.response.json();",
+									"",
+									"pm.collectionVariables.set(\"list_id\",jsonList.id);",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/boards/{{board_id}}/lists?key={{Trello Key}}&token={{Trello Token}}&name=Create List Test",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"boards",
+								"{{board_id}}",
+								"lists"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}",
+									"description": "Required Parameter"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}",
+									"description": "Required Parameter"
+								},
+								{
+									"key": "name",
+									"value": "Create List Test",
+									"description": "List Name"
+								}
+							]
+						},
+						"description": "#### POST list\n\nThis POST request will create a new list in the previously created board. To create this list the board Id is a required parameter.\nThe board id is retrieved from the stored collection variable board_id."
+					},
+					"response": []
+				},
+				{
+					"name": "Create a new card in a list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonCard = pm.response.json();",
+									"",
+									"pm.collectionVariables.set(\"card_id\",jsonCard.id);",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/cards?key={{Trello Key}}&token={{Trello Token}}&idList={{list_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"cards"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								},
+								{
+									"key": "idList",
+									"value": "{{list_id}}"
+								}
+							]
+						},
+						"description": "#### POST Card"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a checklist on a card",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonChecklist = pm.response.json();",
+									"",
+									"pm.collectionVariables.set(\"checklist_id\",jsonChecklist.id);",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/checklists?key={{Trello Key}}&token={{Trello Token}}&idCard={{card_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"checklists"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								},
+								{
+									"key": "idCard",
+									"value": "{{card_id}}"
+								}
+							]
+						},
+						"description": "#### POST Checklist\n\nCreate a new checklist on a card"
+					},
+					"response": []
+				},
+				{
+					"name": "Add comment to a card",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://api.trello.com/1/cards/{{card_id}}/actions/comments?key={{Trello Key}}&token={{Trello Token}}&text=This is a dummy comment to test the card comment",
+							"protocol": "https",
+							"host": [
+								"api",
+								"trello",
+								"com"
+							],
+							"path": [
+								"1",
+								"cards",
+								"{{card_id}}",
+								"actions",
+								"comments"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								},
+								{
+									"key": "text",
+									"value": "This is a dummy comment to test the card comment",
+									"description": "Comment Text"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Checkitem on Checklist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/checklists/{{checklist_id}}/checkItems?key={{Trello Key}}&token={{Trello Token}}&name=Task 1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"checklists",
+								"{{checklist_id}}",
+								"checkItems"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								},
+								{
+									"key": "name",
+									"value": "Task 1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "#### Create elements in Trello\nThis file is dedicated to create different elements in Trello. The idea is to create a micro project management board. \n\nThis board will include a list, a card and some other elements linked to the cards: such as comment and a checklist."
+		},
+		{
+			"name": "Updating protected data (PUT)",
+			"item": [
+				{
+					"name": "Update a board",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/boards/{{board_id}}?key={{Trello Key}}&token={{Trello Token}}&labelNames/green=Done&labelNames/red=Critical&labelNames/orange=Urgent&labelNames/yellow=Waiting for feedback&labelNames/blue=On Production Server&labelNames/purple=Has to be discussed",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"boards",
+								"{{board_id}}"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								},
+								{
+									"key": "labelNames/green",
+									"value": "Done"
+								},
+								{
+									"key": "labelNames/red",
+									"value": "Critical"
+								},
+								{
+									"key": "labelNames/orange",
+									"value": "Urgent"
+								},
+								{
+									"key": "labelNames/yellow",
+									"value": "Waiting for feedback"
+								},
+								{
+									"key": "labelNames/blue",
+									"value": "On Production Server"
+								},
+								{
+									"key": "labelNames/purple",
+									"value": "Has to be discussed"
+								}
+							]
+						},
+						"description": "By running this request you will re-name the labels on the board.\n\nThe colors are represented as follows:\n* Green: Done\n* Red: Critical\n* Orange: Urgent\n* Yellow: Waiting for feedback\n* Blue: On Production Server\n* Purple: Has to be discussed"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a list on a board",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/lists/{{list_id}}?key={{Trello Key}}&token={{Trello Token}}&subscribed=true",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"lists",
+								"{{list_id}}"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								},
+								{
+									"key": "subscribed",
+									"value": "true"
+								}
+							]
+						},
+						"description": "#### PUT list\n\nIn this request, an update has been committed to the list that was created previously. The element that is updated is the value of subscribed: Whether the active member is subscribed to this list."
+					},
+					"response": []
+				},
+				{
+					"name": "Update a card in a list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/1/cards/{{card_id}}?key={{Trello Key}}&token={{Trello Token}}&name=Card Name Updated",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"cards",
+								"{{card_id}}"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								},
+								{
+									"key": "name",
+									"value": "Card Name Updated"
+								}
+							]
+						},
+						"description": "#### PUT Card\n\nI updated the name of the previously created Card. When creating a card through the API the name is not required, so for the purpose of testing the PUT request I have update the name which was an empty property."
+					},
+					"response": []
+				},
+				{
+					"name": "Update a checklist on a card",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1/checklists/{{checklist_id}}?key={{Trello Key}}&token={{Trello Token}}&name=Daily Tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1",
+								"checklists",
+								"{{checklist_id}}"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{Trello Key}}"
+								},
+								{
+									"key": "token",
+									"value": "{{Trello Token}}"
+								},
+								{
+									"key": "name",
+									"value": "Daily Tasks"
+								}
+							]
+						},
+						"description": "#### PUT Checklists\nI updated the checklist name to: Daily Tasks"
+					},
+					"response": []
+				}
+			],
+			"description": "#### Updating elements from the (POST) file \n\nThis file contains the requests that update the created items. I made sure to use a similar structure to the POST file."
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{Trello Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "board_id",
+			"value": "47REU8tk"
+		},
+		{
+			"key": "list_id",
+			"value": "6079dd75ff656c87415230f8"
+		},
+		{
+			"key": "card_id",
+			"value": "5abbe4b7ddc1b351ef961414"
+		},
+		{
+			"key": "checklist_id",
+			"value": "6079e2a380de428729c5a7f5"
+		}
+	]
+}
